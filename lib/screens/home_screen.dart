@@ -10,6 +10,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final bookCount = Provider.of<DataProvider>(context).listOfBooks;
+
     return Scaffold(
       appBar: AppBar(
 
@@ -62,11 +64,11 @@ class HomeScreen extends StatelessWidget {
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Categories('Novel'),
-                        Categories('Comic'),
-                        Categories('Magazine'),
-                        Categories('Action'),
-                        Categories('Love'),
+                        Categories('Novel', bookCount.length),
+                        Categories('Comic', bookCount.length),
+                        Categories('Magazine', bookCount.length),
+                        Categories('Action', bookCount.length),
+                        Categories('Love', bookCount.length),
                       ],
                     ),
                   ),

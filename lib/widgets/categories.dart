@@ -4,14 +4,15 @@ import 'package:movie_junction/screens/category_screen.dart';
 class Categories extends StatelessWidget {
 
   final String book;
+  final int count;
 
-  Categories(this.book);
+  Categories(this.book, this.count);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(CategoryScreen.routeName, arguments: Categories(book));
+        Navigator.of(context).pushNamed(CategoryScreen.routeName, arguments: Categories(book,count));
       },
       child: Container(
         width: 110,

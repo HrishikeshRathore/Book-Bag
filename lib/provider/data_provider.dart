@@ -7,6 +7,8 @@ class DataProvider with ChangeNotifier{
 
   List<DetailModel> listOfBooks =[];
 
+  var totalBookCount;
+
   int initialIndex=0;
   var subject;
   bool disableButtonPrev = false;
@@ -18,6 +20,7 @@ class DataProvider with ChangeNotifier{
     this.subject = subject;
     var data = jsonDecode(bookData) as Map;
     var bookList = data['items'] as List;
+    totalBookCount = data['totalItems'];
 
     List<DetailModel> tempData = [];
 
