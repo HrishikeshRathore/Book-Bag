@@ -5,12 +5,21 @@ import 'package:movie_junction/widgets/categories.dart';
 import 'package:movie_junction/widgets/grid_model.dart';
 import 'package:provider/provider.dart';
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
 
   static const routeName = '/categoryScreen';
 
   @override
+  _CategoryScreenState createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+
+  @override
   Widget build(BuildContext context) {
+
+
+
     final getProvider = Provider.of<DataProvider>(context, listen: false);
 
     final Categories args = ModalRoute
@@ -19,14 +28,7 @@ class CategoryScreen extends StatelessWidget {
         .arguments;
 
     return Scaffold(
-      body: FutureBuilder(
-          future: getProvider.getDataFromApi(args.book),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            return snapshot.connectionState == ConnectionState.waiting ?
-            Center(
-              child: Image(image: AssetImage('assets/loader.gif'),),
-            ) :
-            Column(
+      body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Appbar(args.book),
@@ -42,23 +44,43 @@ class CategoryScreen extends StatelessWidget {
                             width: double.infinity,
                             child: Card(
                               elevation: 4,
-                              child: Consumer<DataProvider>(
-                                builder: (BuildContext context, dataProvider,
-                                    Widget child) {
-                                  return GridView.builder(
-                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisSpacing: 5,
-                                      mainAxisSpacing: 5,
-                                      crossAxisCount: 3,
-                                      childAspectRatio: 1.5 / 3,
-                                    ),
-                                    itemBuilder: (ctx, index) =>
-                                        GridModel(
-                                          dataProvider.listOfBooks[index]
-                                              .bookName,
-                                          dataProvider.listOfBooks[index].image,
+                              child: FutureBuilder (
+                                future: getProvider.getDataFromApi(args.book),
+                                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                                  return snapshot.connectionState == ConnectionState.waiting ?
+                                      Center(child: CircularProgressIndicator(),) :
+
+                                    Consumer<DataProvider>(
+                                      child: Center(child: CircularProgressIndicator(),),
+                                    builder: (BuildContext context, dataProvider,
+                                        Widget child) {
+                                      return dataProvider.listOfBooks.length == 0 ? child : GridView.builder(
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisSpacing: 15,
+                                          mainAxisSpacing: 15,
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1.5 / 3,
                                         ),
-                                    itemCount: dataProvider.listOfBooks.length,
+                                        itemBuilder: (ctx, index) =>
+                                            GridModel(
+                                              id: dataProvider.listOfBooks[index].id,
+                                              rating: dataProvider.listOfBooks[index].averageRating,
+                                              previewLink: dataProvider.listOfBooks[index].previewLink,
+                                              buyLink: dataProvider.listOfBooks[index].buyLink,
+                                              description: dataProvider.listOfBooks[index].description,
+                                              image: dataProvider.listOfBooks[index].thumbnailUrl,
+                                              subtitle: dataProvider.listOfBooks[index].subtitle,
+                                              amount: dataProvider.listOfBooks[index].amount,
+                                              authorName: dataProvider.listOfBooks[index].authors,
+                                              subject: dataProvider.listOfBooks[index].categories,
+                                              pages: dataProvider.listOfBooks[index].pageCount,
+                                              bookName: dataProvider.listOfBooks[index].title,
+                                              published: dataProvider.listOfBooks[index].publishedDate,
+                                              publisher: dataProvider.listOfBooks[index].publisher,
+                                            ),
+                                        itemCount: dataProvider.listOfBooks.length,
+                                      );
+                                    },
                                   );
                                 },
                               ),
@@ -70,44 +92,47 @@ class CategoryScreen extends StatelessWidget {
                           padding: EdgeInsets.all(5),
                           child: Card(
                             elevation: 4,
-                            child: Row(
+                            child: Consumer<DataProvider> (
+                              builder: (BuildContext context, value, Widget child) {
+                                return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  '${getProvider.totalBookCount} books found',
-
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
+                                      '${value.totalBookCount} books found',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
                                 SizedBox(),
                                 SizedBox(),
                                 IconButton(
                                   icon: Icon(
                                     Icons.arrow_back_ios,
-                                    color: Colors.redAccent,
                                   ),
-                                  onPressed: () => getProvider.previousPage(),
+                                  color: Colors.red,
+                                  disabledColor: Colors.grey,
+                                  onPressed: value.initialIndex <= 0 ? null : () => value.previousPage(),
                                 ),
                                 IconButton(
                                     icon: Icon(
                                       Icons.arrow_forward_ios,
-                                      color: Colors.redAccent,
                                     ),
-                                    onPressed: () => getProvider.nextPage()
+                                    color: Colors.red,
+                                    disabledColor: Colors.grey ,
+                                    onPressed: value.initialIndex > (value.totalBookCount - 20) ? null : () => value.nextPage(),
                                 ),
                               ],
-                            ),
+                            );
+                              }
                           ),
+                        ),
                         ),
                       ],
                     ),
                   ),
                 ),
               ],
-            );
-          }
       ),
     );
   }

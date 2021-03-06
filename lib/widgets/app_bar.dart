@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movie_junction/provider/data_provider.dart';
+import 'package:provider/provider.dart';
 
 class Appbar extends StatelessWidget {
 
@@ -26,6 +28,7 @@ class Appbar extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.white,),
               onPressed: () {
+                Provider.of<DataProvider>(context, listen: false).listOfBooks = [];
                 Navigator.of(context).pop();
               },
             ),
