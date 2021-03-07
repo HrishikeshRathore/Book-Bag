@@ -100,4 +100,17 @@ class DataProvider with ChangeNotifier{
     notifyListeners();
   }
 
+
+
+  Future<DetailModel> getDataUsingId(String id) async{
+
+    var bookData = await API.getDataById(id);
+
+    var data = jsonDecode(bookData) as Map;
+
+    return Utils.bookFromJson(data);
+  }
+
+
+
 }

@@ -32,6 +32,7 @@ class SavedBookScreen extends StatelessWidget {
                     icon: Icon(Icons.arrow_back_ios, color: Colors.white,),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -65,6 +66,7 @@ class SavedBookScreen extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemBuilder: (ctx, index) => SavedBookWidget(
+                                id: dbp.savedBooks[index].id,
                                 imageLink : dbp.savedBooks[index].image,
                                 bookTitle : dbp.savedBooks[index].title,
                                 bookAuthor : dbp.savedBooks[index].author,

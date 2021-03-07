@@ -36,16 +36,18 @@ class BestsellerList extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        showBottomSheet(
+        showModalBottomSheet(
+          barrierColor: Colors.black54,
           elevation: 2,
           context: context,
-          builder: (context) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(52),
-                topRight: Radius.circular(52),
-              ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.elliptical(70,70),
+              topRight: Radius.elliptical(70,70),
             ),
+          ),
+          builder: (context) => Container(
+            width: MediaQuery.of(context).size.width * .5,
             margin: EdgeInsets.symmetric(horizontal: 25),
             height: MediaQuery.of(context).size.height * .55,
             child: Column(
@@ -72,8 +74,8 @@ class BestsellerList extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             child: Image.network(
                               bookImage,
-                              width: 100,
-                              height: 150,
+                              width: 90,
+                              height: 140,
                             ),
                           ),
                           SizedBox(width: 25,),
@@ -82,7 +84,7 @@ class BestsellerList extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  bookTitle,
+                                  Utils.trimString(bookTitle, 30),
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
@@ -140,7 +142,7 @@ class BestsellerList extends StatelessWidget {
                         SizedBox(height: 10,),
                         Expanded(
                           child: Text(
-                              description == null ? 'No description' : Utils.trimString(description, 400),
+                              description == null || description == '' ? 'No Description Available' : Utils.trimString(description, 400),
                               style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 12,

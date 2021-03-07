@@ -19,16 +19,16 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-
-        actions: [
-          IconButton(
-              padding: EdgeInsets.all(20),
-              icon: Icon(Icons.save_rounded, color: Colors.white, size: 30,),
-              onPressed: () {
-                Navigator.of(context).pushNamed(SavedBookScreen.routeName);
-              }
+          leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.menu, size: 35,),
+                  onPressed: () { Scaffold.of(context).openDrawer(); },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
           ),
-        ],
+          leadingWidth: 30,
           title: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -60,6 +60,95 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         foregroundColor: Colors.white,
         backgroundColor: Colors.redAccent,
+      ),
+
+      drawer: Drawer(
+
+        child: Stack(
+          children: [
+          ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                padding: EdgeInsets.only(top: 50),
+                child: Text('Book Bin',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize:28,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/appbg.jpg"),
+                        fit: BoxFit.cover,
+                    ),
+                ),
+              ),
+              ListTile(
+                trailing: Icon(Icons.save_rounded),
+                title: Text('Saved Books',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(SavedBookScreen.routeName);
+                },
+              ),
+              Divider(),
+              ListTile(
+                trailing: Icon(Icons.style),
+                title: Text('About',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                onTap: () {
+                },
+              ),
+
+              Divider(),
+
+            ],
+      ),
+            Positioned(
+              bottom: 0,
+              right: 18,
+              child: Container(
+                padding: EdgeInsets.all(22),
+                child: Row(
+                  children: [
+                    Text('With',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        color: Colors.black45
+                      ),
+                    ),
+                    SizedBox(width: 5,),
+                    Icon(Icons.favorite,
+                      color: Colors.red[200],
+                      size: 27,
+                    ),
+                    SizedBox(width: 5,),
+                    Text('from Hrishikesh',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Colors.black45,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+        ),
       ),
 
       body: Container(
@@ -179,7 +268,7 @@ class HomeScreen extends StatelessWidget {
 
                       Expanded(
                         child: FutureBuilder(
-                          future: Provider.of<NytDataProvider>(context).getDataNyt(),
+                          future: Provider.of<NytDataProvider>(context,listen: false).getDataNyt(),
                           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                             return snapshot.connectionState == ConnectionState.waiting ?
                               Center(child: CircularProgressIndicator(),) :

@@ -12,8 +12,6 @@ class DatabaseProvider with ChangeNotifier{
 
   Future<void> getSavedBooks() async {
 
-
-
       var listOfBooks = await DatabaseControl.getBooks();
       List<SavedBook> saved_Books = [];
 

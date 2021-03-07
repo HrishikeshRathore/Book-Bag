@@ -12,13 +12,14 @@ class NytDataProvider with ChangeNotifier{
   List<CategoryListModel> categoryScreenList = [];
 
 
+
   String catName;
   var randomElement;
+  var categoryName;
   Random rnd = new Random();
 
-  String getRandomCategory() {
+  void getRandomCategory() {
     randomElement = listOfCategories[rnd.nextInt(listOfCategories.length)];
-    return randomElement;
   }
 
   Future<void> getDataNyt() async{
@@ -95,5 +96,44 @@ class NytDataProvider with ChangeNotifier{
 
     getRandomCategory();
   }
+
+
+
+
+  Future<List<NytDataModel>> getDataNytAccordingToList(String id) async{
+
+    List<NytDataModel> newList = [];
+
+    var nytData = await NYTApi.getNytData(id);
+    var dataDecoded = jsonDecode(nytData);
+
+    var dataResults = dataDecoded['results'];
+
+    if(dataResults == null)
+      return [];
+
+    var dataBooks = dataResults['books'];
+
+    List<NytDataModel> tempDataList = [];
+
+
+    dataBooks.forEach((book) {
+      tempDataList.add(
+        NytDataModel(
+          author: book['author'] == null ? 'Book Author Unknown' : book['author'],
+          bookTitle: book['title'] == null ? 'Book Title Unknown' : book['title'],
+          image: book['book_image'] == null ? 'https://thumbs.dreamstime.com/b/grunge-textured-not-available-stamp-seal-not-available-stamp-seal-watermark-distress-style-blue-vector-rubber-print-not-138792800.jpg' : book['book_image'],
+          rank: book['rank'],
+          publisher: book['publisher'] == null ? 'No Publisher Available' : book['publisher'],
+          description: book['description'] == null ? 'No Description Available' : book['description'],
+          buyLink: book['amazon_product_url'] == null ? '' : book['amazon_product_url'],
+        ),
+      );
+    });
+
+    newList = tempDataList;
+    return newList;
+  }
+
 
 }

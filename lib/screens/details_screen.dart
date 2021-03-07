@@ -22,7 +22,7 @@ class DetailsScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Color.fromRGBO(255, 207, 207, .2),
+        color: Color.fromRGBO(255, 207, 207, .1),
         child: Column(
           children: [
             Container(

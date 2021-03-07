@@ -76,6 +76,7 @@ class BestSellerScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (ctx, i) => ListWidget(
+                    id: list[i].catId,
                     name: list[i].catName,
                     nameKey: list[i].catId,
                     lastDate: list[i].oldDate,

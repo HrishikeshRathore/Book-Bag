@@ -11,4 +11,9 @@ class API{
     http.Response response = await http.get('https://www.googleapis.com/books/v1/volumes?q=$category:$search&maxResults=12&startIndex=$index');
     return response.body;
   }
+
+  static Future<String> getDataById(String id) async{
+    http.Response response = await http.get('https://www.googleapis.com/books/v1/volumes/$id');
+    return response.body;
+  }
 }
