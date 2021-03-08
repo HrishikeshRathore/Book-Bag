@@ -110,19 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               Divider(),
-              ListTile(
-                trailing: Icon(Icons.style),
-                title: Text('About',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                onTap: () {
-                },
-              ),
-
-              Divider(),
+              
 
             ],
       ),
