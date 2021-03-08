@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:movie_junction/models/detail_model.dart';
 
 class Utils{
@@ -62,5 +63,6 @@ class Utils{
       accessViewStatus: accessInfo['accessViewStatus'],
     );
   }
+
 
 }

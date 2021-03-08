@@ -53,9 +53,7 @@ class NytDataProvider with ChangeNotifier{
       );
     });
     listOfData = tempData;
-
-    listOfData.forEach((element) {
-    });
+    print(listOfData.length);
 
     notifyListeners();
   }

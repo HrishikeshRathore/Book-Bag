@@ -19,7 +19,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
 
 
-
     final getProvider = Provider.of<DataProvider>(context, listen: false);
 
     final Categories args = ModalRoute
@@ -32,6 +31,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Appbar(args.book),
+
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(5),
@@ -84,9 +84,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   );
                                 },
                               ),
+                              ),
                             ),
                           ),
-                        ),
                         Container(
                           width: double.infinity,
                           padding: EdgeInsets.all(5),
@@ -120,7 +120,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     ),
                                     color: Colors.red,
                                     disabledColor: Colors.grey ,
-                                    onPressed: value.initialIndex > (value.totalBookCount - 20) ? null : () => value.nextPage(),
+                                    onPressed: () => value.nextPage(),
                                 ),
                               ],
                             );

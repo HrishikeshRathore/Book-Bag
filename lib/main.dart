@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_junction/best%20seller/best_seller_screen.dart';
 import 'package:movie_junction/best%20seller/nyt_data_provider.dart';
+import 'package:movie_junction/enums/connectivity_status.dart';
 import 'package:movie_junction/provider/data_provider.dart';
 import 'package:movie_junction/provider/database_provider.dart';
 import 'package:movie_junction/screens/category_screen.dart';
@@ -8,6 +9,7 @@ import 'package:movie_junction/screens/details_screen.dart';
 import 'package:movie_junction/screens/home_screen.dart';
 import 'package:movie_junction/screens/saved_book_screen.dart';
 import 'package:movie_junction/screens/search_screen.dart';
+import 'package:movie_junction/services/connectivity_services.dart';
 import 'package:provider/provider.dart';
 
 
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => DataProvider(),),
         ChangeNotifierProvider(create: (ctx) => DatabaseProvider(),),
         ChangeNotifierProvider(create: (ctx) => NytDataProvider(),),
+        StreamProvider<ConnectivityStatus>(
+          create: (cxt) => ConnectivityService().connectionStatusController.stream,
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

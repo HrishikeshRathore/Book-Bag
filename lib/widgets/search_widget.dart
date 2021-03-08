@@ -23,28 +23,41 @@ class _SearchWidgetState extends State<SearchWidget> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
-          child: TextField(
-            style: TextStyle(
-              color: Colors.white,
-            ),
-            onChanged: (value) {
+          child: TextFormField(
+            cursorColor: Colors.white,
+            onChanged: (value){
               this.searchTerm = value;
             },
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+            ),
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.done,
+            focusNode: FocusNode(),
+            onFieldSubmitted: (term) {
+              Provider.of<DataProvider>(context, listen: false).getSearchedLetter(searchTerm);
+            },
             decoration: InputDecoration(
-              labelText: 'Search',
-              labelStyle: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold
-              ),
-              border: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.white),
+              hintStyle: TextStyle(
+                color: Colors.white
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(25.0),
+                borderSide: BorderSide(
+                  color: Colors.white,
+                ),
               ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.0),
+                borderSide: BorderSide(
+                  color: Colors.white,
+                  width: 2.0,
+                ),
+              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              hintText: 'Search here ...',
+              fillColor: Colors.white,
             ),
           ),
         ),
@@ -52,6 +65,7 @@ class _SearchWidgetState extends State<SearchWidget> {
             icon: Icon(
                 Icons.search_sharp,
               color: Colors.white,
+              size: 30,
             ),
             onPressed: (){
               Provider.of<DataProvider>(context, listen: false).getSearchedLetter(searchTerm);
