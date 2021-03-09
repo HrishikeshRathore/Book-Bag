@@ -50,7 +50,7 @@ class Utils{
           : 'https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg',
       previewLink: volumeInfo['previewLink'],
       infoLink: volumeInfo['infoLink'],
-      buyLink: saleInfo['buyLink'],
+      buyLink: saleInfo['buyLink'] == null ? '' : saleInfo['buyLink'],
       webReaderLink: accessInfo['webReaderLink'],
       isEbook: saleInfo['isEbook'],
       saleability: saleInfo['saleability'],

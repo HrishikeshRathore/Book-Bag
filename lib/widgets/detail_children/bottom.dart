@@ -28,7 +28,7 @@ class _BottomState extends State<Bottom> {
         title: widget.name,
         chooserTitle: 'Share ${widget.name}',
         linkUrl: widget.shopLink,
-        text: widget.shopLink,
+        text: 'Checkout this book.',
     );
   }
 
@@ -87,23 +87,21 @@ class _BottomState extends State<Bottom> {
           ),
 
           IconButton(icon: Icon(Icons.remove_red_eye_sharp,
-            color: Colors.white,
+            color:widget.previewLink == null ? Colors.grey : Colors.white,
             size: 30,
           ),
-            disabledColor: Colors.grey,
             onPressed: widget.previewLink == null ? null : _launchURLPreview,
           ),
 
           IconButton(icon: Icon(Icons.shop,
             size: 30,
-            color: Colors.white,
+            color: widget.shopLink == '' ? Colors.grey :Colors.white,
           ),
-            disabledColor: Colors.grey,
-            onPressed: widget.shopLink == null ? null : _launchURLBuy,
+            onPressed: widget.shopLink == '' ? null : _launchURLBuy,
           ),
 
           IconButton(icon: Icon(Icons.share,
-            color: Colors.white,
+            color: widget.shopLink == '' ? Colors.grey :Colors.white,
             size: 30,
           ),
               onPressed: share,

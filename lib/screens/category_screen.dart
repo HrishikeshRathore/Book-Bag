@@ -98,7 +98,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                      '${value.totalBookCount} books found',
+                                  value.totalBookCount == null? '0 books found' :'${value.totalBookCount} books found',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.redAccent,

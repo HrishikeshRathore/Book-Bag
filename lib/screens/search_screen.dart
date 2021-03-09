@@ -108,13 +108,13 @@ class _SearchScreenState extends State<SearchScreen> {
 
             Expanded(
                child: FutureBuilder(
-                 future: Provider.of<DataProvider>(context).getSearchedData(),
+                 future: Provider.of<DataProvider>(context, listen: false).getSearchedData(),
                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                    return snapshot.connectionState == ConnectionState.waiting ?
                        Center(
                          child: Image(image: AssetImage('assets/loader.gif'),),
                        ) :
-                   Container(
+                Container(
                      padding: EdgeInsets.all(5),
                      width: double.infinity,
                      child: Consumer<DataProvider>(
@@ -164,7 +164,7 @@ class _SearchScreenState extends State<SearchScreen> {
                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                        children: [
                          Text(
-                           '${value.totalBookCount} books found',
+                           value.totalBookCount == null ? '0 books found' : '${value.totalBookCount}  books found',
                            style: TextStyle(
                              fontWeight: FontWeight.bold,
                              color: Colors.redAccent,

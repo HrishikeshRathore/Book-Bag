@@ -56,13 +56,21 @@ class DataProvider with ChangeNotifier{
 
   Future<void> getSearchedData() async{
 
+    print('getting searched data');
+
     var bookData = await API.getSearchedData(finalSearchLetter, choosenCategory, initialIndex);
 
     var data = jsonDecode(bookData) as Map;
     var bookList = data['items'] as List;
     totalBookCount = data['totalItems'];
 
+    listOfBooks = [];
+
     List<DetailModel> tempData = [];
+
+    if(bookList == null){
+      return;
+    }
 
     if(tempData == null){
       listOfBooks = [];
